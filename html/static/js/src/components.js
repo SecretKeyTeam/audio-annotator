@@ -152,10 +152,14 @@ PlayBar.prototype = {
 
         // Play and pause on spacebar keydown
         $(document).on("keydown", function (event) {
-            if (event.keyCode === 32) {
+            if (event.keyCode === 32 || event.keyCode == 9) {
                 event.preventDefault();
                 my.trackEvent('spacebar-' + (my.wavesurfer.isPlaying() ? 'pause' : 'play'));
                 my.wavesurfer.playPause();
+                if(event.keyCode == 9){
+                    //添加tab键的支持，需要屏蔽原来tab键的功能。
+                    return false;
+                }
             }
         });
     },

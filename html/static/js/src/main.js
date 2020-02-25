@@ -45,9 +45,17 @@ function Annotator() {
         // For the spectrogram the height is half the number of fftSamples
         fftSamples: height * 2,
         height: height,
-        fillParent: false,
+        // fillParent: false,
         minPxPerSec: minPxPerSec,
-        colorMap: spectrogramColorMap
+        colorMap: spectrogramColorMap,
+
+        barHeight: 2,
+        cursorColor:'#ff0000',
+        scrollParent:true,
+        cursorWidth:2,
+        autoCenter:false,
+        fillParent:true,
+        hideScrollbar:false,
     });
 
     // Create labels (labels that appear above each region)

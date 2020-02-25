@@ -494,6 +494,8 @@ AnnotationStages.prototype = {
     // Event Handler: when the user finishes drawing the region, track the action and 
     // select the new region and switch to stage 3 so the user can tag the region
     createRegionSwitchToStageThree: function(region) {
+        console.log("createRegionSwitchToStageThree id: " + region.id + "  start: " + region.start +  "  end: " + region.end);
+        this.wavesurfer.currentRegion = region;
         if (region !== this.currentRegion) {
             this.blockDeselect = true;
             this.trackEvent('offline-create', region.id, null, region.start, region.end);
@@ -507,6 +509,7 @@ AnnotationStages.prototype = {
             this.trackEvent('select-for-edit', region.id);
             this.updateStage(3, region);
             this.stageThreeView.updateTime(this.currentRegion);
+            this.wavesurfer.currentRegion = region;
         } else {
             this.trackEvent('deselect', region.id);
             this.updateStage(1);
@@ -523,6 +526,7 @@ AnnotationStages.prototype = {
 
     // Event handler: called when the a region is draged or resized, adds action to event list
     trackMovement: function(region, event, type) {
+        // console.log("trackMovement id: " + region.id + "  start: " + region.start +  "  end: " + region.end + "  type:" + type);
         if (this.currentStage === 3) {
             this.giveFeedback();
             this.trackEvent('region-moved-' + type, this.currentRegion.id, null, this.currentRegion.start, this.currentRegion.end);
@@ -574,6 +578,7 @@ AnnotationStages.prototype = {
 
     // Event Handler: called when region is deleted
     deleteAnnotation: function(region) {
+        console.log("deleteAnnotation");
         // update f1 score and give the user feedback
         this.giveFeedback();
         // Add the action to the event list
@@ -582,6 +587,8 @@ AnnotationStages.prototype = {
         this.deletedAnnotations.push(region);
         // If that region was currently selected, switch back to stage 1
         if (region === this.currentRegion) {
+            // console.log("del current");
+            // this.wavesurfer.currentRegion = undefined;
             this.updateStage(1);
         }
     },

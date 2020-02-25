@@ -155,7 +155,19 @@ PlayBar.prototype = {
             if (event.keyCode === 32 || event.keyCode == 9) {
                 event.preventDefault();
                 my.trackEvent('spacebar-' + (my.wavesurfer.isPlaying() ? 'pause' : 'play'));
-                my.wavesurfer.playPause();
+                // my.wavesurfer.playPause();
+                // my.wavesurfer.currentRegion;
+                // my.trackEvent('play-region', my.wavesurfer.currentRegion.id);
+                if(my.wavesurfer.isPlaying()){
+                    my.wavesurfer.pause();
+                }else{
+                    console.log('start: ' + my.wavesurfer.currentRegion.start + "  end: " + my.wavesurfer.currentRegion.end);
+                    if(my.wavesurfer.currentRegion != undefined){
+                        my.wavesurfer.play(parseFloat(my.wavesurfer.currentRegion.start), parseFloat(my.wavesurfer.currentRegion.end));
+                    }else{
+                        my.wavesurfer.play();
+                    }
+                }
                 if(event.keyCode == 9){
                     //添加tab键的支持，需要屏蔽原来tab键的功能。
                     return false;
